@@ -26,16 +26,17 @@ enum GlobalObserver {
             try await runLightSession(.globalObserver(notifName), token) {
                 if config.automaticallyUnhideMacosHiddenApps {
                     if let w = prevFocus?.windowOrNil,
+                       w.visualWorkspace?.isVisible == true,
                        w.macAppUnsafe.nsApp.isHidden,
                        // "Hide others" (cmd-alt-h) -> don't force focus
                        // "Hide app" (cmd-h) -> force focus
-                       MacApp.allAppsMap.values.count(where: { $0.nsApp.isHidden }) == 1
+                       MacApp.allAppsMap.values.count(where: { $0.nsApp.isHidden && !isHiddenByAeroSpace($0) }) == 1
                     {
                         // Force focus
                         _ = w.focusWindow()
                         w.nativeFocus()
                     }
-                    for app in MacApp.allAppsMap.values {
+                    for app in MacApp.allAppsMap.values where !isHiddenByAeroSpace(app) {
                         app.nsApp.unhide()
                     }
                 }

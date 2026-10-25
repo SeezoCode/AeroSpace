@@ -46,6 +46,10 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
 
+# Natively hide (as in cmd-h) apps whose windows are all on invisible workspaces, and unhide them when one of
+# their workspaces becomes visible. Hidden apps stop rendering their windows, which saves battery.
+hide-apps-on-invisible-workspaces = false
+
 # List of workspaces that should stay alive even when they contain no windows,
 # even when they are invisible.
 # This config option is only available since 'config-version = 2'

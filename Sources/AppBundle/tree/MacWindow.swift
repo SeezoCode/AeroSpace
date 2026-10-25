@@ -84,9 +84,8 @@ final class MacWindow: Window {
         let parent = unbindFromParent().parent
         let deadWindowWorkspace = parent.nodeWorkspace
         let focus = focus
-        if let deadWindowWorkspace, deadWindowWorkspace == focus.workspace ||
-            deadWindowWorkspace == prevFocusedWorkspace && prevFocusedWorkspaceDate.distance(to: .now) < 1
-        {
+        // Don't jump back to the previously focused workspace when one of its windows closes
+        if let deadWindowWorkspace, deadWindowWorkspace == focus.workspace {
             switch parent.cases {
                 case .tilingContainer, .floatingWindowsContainer, .macosHiddenAppsWindowsContainer, .macosFullscreenWindowsContainer:
                     let deadWindowFocus = deadWindowWorkspace.toLiveFocus()
